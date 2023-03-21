@@ -11,16 +11,29 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r}
 library(tidyverse)
+```
+
+```{r}
 
 Sys.setenv("VROOM_CONNECTION_SIZE" = 131072 * 5)
-migration_by_county =read_csv("C:/Users/Jeeves/Documents/Projects/MigrationData/migration_by_county.csv")
+migration_Tompkins_NY_2021 =read_csv("C:/Users/Jeeves/Documents/Projects/MigrationData/migration_by_county.csv")
 
-migration_by_county %>% 
+migration_Tompkins_NY_2021 %>% 
   select(Label, matches("Tompkins")) %>%
+  select(-contains("Margin of Error")) %>%
+  rename("Total(est)" = "Tompkins County, New York!!Total!!Estimate") %>%
+  rename("Moved; within same county" = "Tompkins County, New York!!Moved; within same county!!Estimate") %>%
+  rename("Moved; from different county" = "Tompkins County, New York!!Moved; from different county, same state!!Estimate") %>%
+  rename("Moved; from abroad" = "Tompkins County, New York!!Moved; from abroad!!Estimate") %>% 
+  rename("Moved; from different state" = "Tompkins County, New York!!Moved; from different state!!Estimate") %>% 
   head()
 #  ifelse(is.na = TRUE, )
-  view()
-
 
 
 ```
+
+
+
+
+
+
