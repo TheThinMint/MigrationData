@@ -15,10 +15,9 @@ library(tidyverse)
 Sys.setenv("VROOM_CONNECTION_SIZE" = 131072 * 5)
 migration_by_county =read_csv("C:/Users/Jeeves/Documents/Projects/MigrationData/migration_by_county.csv")
 
-head(migration_by_county)
-
 migration_by_county %>% 
-  select(Label, matches("Tompkins")) %>% 
+  select(Label, matches("Tompkins")) %>%
+  head()
 #  ifelse(is.na = TRUE, )
   view()
 
