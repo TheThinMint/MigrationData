@@ -1,0 +1,27 @@
+---
+title: "migration_by_county"
+author: "Jessie Hughes"
+date: "2023-03-21"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+
+Sys.setenv("VROOM_CONNECTION_SIZE" = 131072 * 5)
+migration_by_county =read_csv("C:/Users/Jeeves/Documents/Projects/MigrationData/migration_by_county.csv")
+
+head(migration_by_county)
+
+migration_by_county %>% 
+  select(Label, matches("Tompkins")) %>% 
+#  ifelse(is.na = TRUE, )
+  view()
+
+
+
+```
