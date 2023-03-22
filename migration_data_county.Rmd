@@ -10,28 +10,89 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r}
+install.packages('tidyverse')
 library(tidyverse)
 ```
 
+
+### Subset and simplify data at the county level, apply a for loop to run through the other 8299 counties:
 ```{r}
 
 Sys.setenv("VROOM_CONNECTION_SIZE" = 131072 * 5)
-migration_Tompkins_NY_2021 =read_csv("C:/Users/Jeeves/Documents/Projects/MigrationData/migration_by_county.csv")
+migration_2021 = read_csv("C:/Users/Jeeves/Documents/Projects/MigrationData/migration_by_county.csv")
+view(migration_2021)
 
-migration_Tompkins_NY_2021 %>% 
+#TOMPKINS COUNTY
+migration_Tompkins_NY_2021 <- migration_2021 %>% 
   select(Label, matches("Tompkins")) %>%
   select(-contains("Margin of Error")) %>%
-  rename("Total(est)" = "Tompkins County, New York!!Total!!Estimate") %>%
-  rename("Moved; within same county" = "Tompkins County, New York!!Moved; within same county!!Estimate") %>%
-  rename("Moved; from different county" = "Tompkins County, New York!!Moved; from different county, same state!!Estimate") %>%
-  rename("Moved; from abroad" = "Tompkins County, New York!!Moved; from abroad!!Estimate") %>% 
-  rename("Moved; from different state" = "Tompkins County, New York!!Moved; from different state!!Estimate") %>% 
-  head()
+  rename("total" = "Tompkins County, New York!!Total!!Estimate") %>%
+  rename("moved_within_same_county" = "Tompkins County, New York!!Moved; within same county!!Estimate") %>%
+  rename("moved_from_different_county" = "Tompkins County, New York!!Moved; from different county, same state!!Estimate") %>%
+  rename("moved_from_abroad" = "Tompkins County, New York!!Moved; from abroad!!Estimate") %>% 
+  rename("moved_from_different_state" = "Tompkins County, New York!!Moved; from different  state!!Estimate") %>% 
+  filter(!row_number() %in% c(2:27)) %>% 
+  filter(!row_number() %in% c(6:40))
+
+view(migration_Tompkins_NY_2021)
+
 #  ifelse(is.na = TRUE, )
 
+#  rownames_to_column() %>% 
+#  gather(variable, value, -rowname) %>% 
+#  spread(rowname, value) %>% 
+
+#CAYUGA COUNTY
+migration_Cayuga_NY_2021 <- migration_2021 %>% 
+  select(Label, matches("Cayuga")) %>%
+  select(-contains("Margin of Error")) %>%
+  rename("total" = "Cayuga County, New York!!Total!!Estimate") %>%
+  rename("moved_within_same_county" = "Cayuga County, New York!!Moved; within same county!!Estimate") %>%
+  rename("moved_from_different_county" = "Cayuga County, New York!!Moved; from different county, same state!!Estimate") %>%
+  rename("moved_from_abroad" = "Cayuga County, New York!!Moved; from abroad!!Estimate") %>% 
+  rename("moved_from_different_state" = "Cayuga County, New York!!Moved; from different  state!!Estimate") %>% 
+  filter(!row_number() %in% c(2:27)) %>% 
+  filter(!row_number() %in% c(6:40))
+
+view(migration_Cayuga_NY_2021)
+
+
+#MONROE COUNTY
+migration_Monroe_NY_2021 <- migration_2021 %>% 
+  select(Label, matches("Monroe County, New York")) %>%
+  select(-contains("Margin of Error")) %>%
+  rename("total" = "Monroe County, New York!!Total!!Estimate") %>%
+  rename("moved_within_same_county" = "Monroe County, New York!!Moved; within same county!!Estimate") %>%
+  rename("moved_from_different_county" = "Monroe County, New York!!Moved; from different county, same state!!Estimate") %>%
+  rename("moved_from_abroad" = "Monroe County, New York!!Moved; from abroad!!Estimate") %>% 
+  rename("moved_from_different_state" = "Monroe County, New York!!Moved; from different  state!!Estimate") %>% 
+  filter(!row_number() %in% c(2:27)) %>% 
+  filter(!row_number() %in% c(6:40))
+
+view(migration_Monroe_NY_2021)
 
 ```
 
+
+#Subset data at the county level using the transposed dataframe (might negate the use of a for loop and run faster)
+```{r}
+#rename columns that will allow you to call them
+#subset rows for migration only
+#Remove all NA and N columns and counties
+#Rename columns for ease of calling
+#Join to QGIS CSV
+
+migration_2021_transposed <- read_csv("C:/Users/Jeeves/Documents/Projects/MigrationData/migration_by_county_transposed.csv")
+
+migration_2021_transposed %>% 
+  rename("total_population" = "Population 1 year and over") %>% 
+  rename("County" = "Label (Grouping)") %>% 
+  head()
+
+
+
+
+```
 
 
 
